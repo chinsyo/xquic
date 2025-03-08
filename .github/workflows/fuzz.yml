@@ -2,9 +2,14 @@ name: Fuzzing
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, fuzz ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, fuzz ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   fuzz-ubuntu:
