@@ -18,6 +18,7 @@ option (XQC_COMPAT_DUPLICATE "qpack compat dup" OFF)
 option (XQC_ENABLE_FEC "enable fec" OFF)
 option (XQC_ENABLE_XOR "enable fec scheme xor" OFF)
 option (XQC_ENABLE_RSC "enable fec scheme reed-solomon code" OFF)
+option (ENABLE_FUZZING "enable fuzzing tests" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -170,6 +171,11 @@ if(XQC_ENABLE_TESTING)
     add_subdirectory(tests)
     add_subdirectory(demo)
 endif(XQC_ENABLE_TESTING)
+
+# fuzzing
+if(ENABLE_FUZZING)
+    add_subdirectory(fuzz)
+endif(ENABLE_FUZZING)
 
 
 # http3/qpack source
