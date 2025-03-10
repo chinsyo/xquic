@@ -87,4 +87,11 @@ void xqc_fuzzer_conn_close_callback(const xqc_cid_t *cid, uint64_t path_id, void
  */
 void xqc_fuzzer_set_event_timer(xqc_usec_t wake_after, void *user_data);
 
+/**
+ * 生成随机字节
+ * @param buf 目标缓冲区
+ * @param len 需要生成的随机字节数
+ */
+void xqc_random_bytes(uint8_t *buf, size_t len);
+
 #endif /* _XQC_FUZZER_COMMON_H_ */

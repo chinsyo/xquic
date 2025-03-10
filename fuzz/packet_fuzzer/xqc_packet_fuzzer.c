@@ -27,8 +27,9 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     client_addr.sin_port = htons(12345);
     
     /* 处理输入数据作为QUIC数据包 */
-    xqc_engine_packet_process(ctx.engine, (const unsigned char *)data, size, 
-                             (struct sockaddr *)&client_addr, sizeof(client_addr), 
+    xqc_engine_packet_process(ctx.engine, (const unsigned char *)data, size,
+                             NULL, 0,
+                             (struct sockaddr *)&client_addr, sizeof(client_addr),
                              xqc_fuzzer_now(), NULL);
     
     /* 模拟引擎主循环处理 */

@@ -6,6 +6,8 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
+// #include "src/common/xqc_random.h"
 
 /* 获取当前时间戳（微秒） */
 xqc_usec_t 
@@ -109,6 +111,20 @@ xqc_fuzzer_init_ctx(xqc_fuzzer_ctx_t *ctx, xqc_engine_type_t engine_type)
     
     ctx->initialized = 1;
     return XQC_OK;
+}
+
+/* 生成随机字节 */
+void
+xqc_random_bytes(uint8_t *buf, size_t len)
+{
+    if (buf == NULL || len == 0) {
+        return;
+    }
+    
+    /* 使用xquic的随机数生成函数 */
+    for (size_t i = 0; i < len; i++) {
+        buf[i] = (uint8_t)(random() & 0xFF);
+    }
 }
 
 /* 销毁模糊测试上下文 */

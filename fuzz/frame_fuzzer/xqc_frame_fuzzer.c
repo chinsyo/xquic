@@ -26,7 +26,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     scid.cid_len = XQC_MAX_CID_LEN;
     dcid.cid_len = XQC_MAX_CID_LEN;
     
-    xqc_connection_t *conn = xqc_client_connect(ctx.engine, &dcid, &scid, NULL, 0, "test", 4, NULL, NULL);
+    xqc_connection_t *conn = xqc_conn_create(ctx.engine, &dcid, &scid, NULL, NULL, XQC_CONN_TYPE_CLIENT);
     if (conn == NULL) {
         xqc_fuzzer_destroy_ctx(&ctx);
         return 0;

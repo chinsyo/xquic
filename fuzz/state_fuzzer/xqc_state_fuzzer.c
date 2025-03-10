@@ -26,7 +26,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     scid.cid_len = XQC_MAX_CID_LEN;
     dcid.cid_len = XQC_MAX_CID_LEN;
     
-    xqc_connection_t *conn = xqc_client_connect(ctx.engine, &dcid, &scid, NULL, 0, "test", 4, NULL, NULL);
+    xqc_connection_t *conn = xqc_conn_create(ctx.engine, &dcid, &scid, NULL, NULL, XQC_CONN_TYPE_SERVER);
     if (conn == NULL) {
         xqc_fuzzer_destroy_ctx(&ctx);
         return 0;
@@ -57,6 +57,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
                     xqc_engine_packet_process(ctx.engine, 
                                            (const unsigned char *)packet_data, 
                                            packet_size, 
+                                           NULL, 0,
                                            (struct sockaddr *)&client_addr, 
                                            sizeof(client_addr), 
                                            xqc_fuzzer_now(), 
@@ -76,7 +77,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
                 
             case 3: /* 创建流 */
                 if (conn) {
-                    xqc_stream_t *stream = xqc_create_stream_with_conn(conn, XQC_STREAM_BIDI);
+                    xqc_stream_t *stream = xqc_create_stream_with_conn(conn, XQC_UNDEFINE_STREAM_ID, XQC_STREAM_BIDI, NULL, NULL);
                     if (stream) {
                         /* 可以在这里对流进行操作 */
                     }
